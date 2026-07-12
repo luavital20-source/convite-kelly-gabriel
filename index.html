@@ -527,7 +527,7 @@ const CONFIG = {
      (B) mp3 embutido no próprio HTML (funciona até offline):
          musica: 'data:audio/mpeg;base64,COLE_AQUI_O_BASE64'
      Deixando vazio (''), o site funciona normalmente, só sem som. */
-  musica:    '',
+  musica:    'musica.mp3',
 
   // 🗺️ mapa — cerimônia e recepção no mesmo endereço
   mapLocal:  'https://www.google.com/maps/place/Garden+Conceito/@-3.8075142,-38.5612021,17z/data=!3m1!4b1!4m6!3m5!1s0x7c74e70284fb47d:0xa0acff47df9529de!8m2!3d-3.8075142!4d-38.5586272!16s%2Fg%2F11g6px7bk4',
@@ -571,6 +571,7 @@ if(temMusica){audio.src=CONFIG.musica;audio.volume=0.85;}
 function setMusicIcon(p){document.getElementById('iconPlay').style.display=p?'none':'block';document.getElementById('iconPause').style.display=p?'block':'none';}
 audio.addEventListener('play',()=>{setMusicIcon(true);const r=document.getElementById('musicRow');if(r)r.style.display='inline-flex';musicToggle.style.display='flex';});
 audio.addEventListener('pause',()=>setMusicIcon(false));
+audio.addEventListener('error',()=>{musicToggle.style.display='none';console.warn('Música não encontrada em: '+CONFIG.musica);});
 function tryPlay(){if(!temMusica)return;const pr=audio.play();if(pr&&pr.catch)pr.catch(()=>{});}
 function startMusic(){if(!temMusica)return;try{audio.currentTime=0;}catch(e){} tryPlay();}
 /* rede de segurança: se o navegador adiar o autoplay, o 1º toque na página libera o som */
